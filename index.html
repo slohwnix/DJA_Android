@@ -5,10 +5,9 @@
   </head>
   <body>
     <script>
-      const url = new URL(window.location.href);
-      const path = url.pathname.replace('/freeHTTPS/', '');
+      const urlParams = new URLSearchParams(window.location.search);
       
-      fetch(path)
+      fetch(urlParams.get('url'))
         .then(response => {
           if (!response.ok) {
             throw new Error("BAD_URL_OR_NETWORK");
