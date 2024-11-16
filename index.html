@@ -6,7 +6,7 @@
   <body>
     <script>
       const url = new URL(window.location.href);
-      const path = url.pathname;
+      const path = url.pathname.replace('/freeHTTPS/', '');
       
       fetch(path)
         .then(response => {
