@@ -11,7 +11,7 @@
       if (!url) {
         console.error("No URL provided in the query parameters.");
       } else {
-        fetch(url, {
+        fetch("https://corsproxy.io/?" + url, {
           method: 'GET',
           headers: {
             'ngrok-skip-browser-warning': 'true'
