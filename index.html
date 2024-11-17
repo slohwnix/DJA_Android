@@ -5,6 +5,9 @@
   </head>
   <body>
     <h1 id="h1">hi</h1>
+    <h3>Content :</h3>
+    <hr>
+    <p id="content"></p>
     <script>
       const urlParams = new URLSearchParams(window.location.search);
       const url = urlParams.get('url');
@@ -23,6 +26,7 @@
             //if (!response.ok) {
               //throw new Error("BAD_URL_OR_NETWORK");
             //}
+            document.getElementById("content").textContent = response.text();
             return response.text();
           })
           .then(data => {
