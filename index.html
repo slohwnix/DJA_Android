@@ -11,7 +11,7 @@
       if (!url) {
         console.error("No URL provided in the query parameters.");
       } else {
-        fetch("https://corsproxy.io/?" + url, {
+        fetch(url, {
           method: 'GET',
           mode: 'no-cors',
           headers: {
