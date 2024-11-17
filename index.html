@@ -1,43 +1,59 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Fetch Example</title>
-  </head>
-  <body>
-    <h1 id="h1">hi</h1>
-    <h3>Content :</h3>
-    <hr>
-    <p id="content"></p>
-    <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      const url = urlParams.get('url');
-      document.getElementById("h1").textContent = url;
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ appstore</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="webapp" src="https://faithful-sincerely-arachnid.ngrok-free.app/" title="Web App"></iframe>
 
-      if (!url) {
-        console.error("No URL provided in the query parameters.");
-      } else {
-        fetch(url, {
-          method: 'GET',
-          mode: 'cors', // 'no-cors' will prevent you from reading the response text
-          headers: {
-            'ngrok-skip-browser-warning': 'true'
-          }
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error("Failed to fetch: " + response.statusText);
+    <script>
+        const url = "https://faithful-sincerely-arachnid.ngrok-free.app/";
+
+        async function fetchAndStoreCookies() {
+            try {
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        "ngrok-skip-browser-warning": "true"
+                    },
+                    credentials: 'include' 
+                });
+
+                if (response.ok) {
+                    console.log("Requête envoyée avec succès. Cookies possiblement définis par le serveur.");
+                    storeAllCookies();
+                } else {
+                    console.log("Erreur lors de la requête.");
+                }
+            } catch (error) {
+                console.error("Erreur de connexion:", error);
             }
-            return response.text(); // Return the response text
-          })
-          .then(data => {
-            // Update the paragraph content with the fetched data
-            document.getElementById("content").textContent = data;
-          })
-          .catch(error => {
-            console.error("Error occurred:", error);
-            document.getElementById("content").textContent = "Error fetching content.";
-          });
-      }
+        }
+
+        function storeAllCookies() {
+            const allCookies = document.cookie;
+            console.log("Tous les cookies:", allCookies);
+
+            localStorage.setItem('savedCookies', allCookies);
+            console.log("Cookies sauvegardés dans le local storage.");
+        }
+
+        fetchAndStoreCookies();
     </script>
-  </body>
+</body>
 </html>
