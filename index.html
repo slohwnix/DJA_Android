@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
+    <title>Fetch Example</title>
   </head>
   <body>
     <h1 id="h1">hi</h1>
@@ -12,28 +12,30 @@
       const urlParams = new URLSearchParams(window.location.search);
       const url = urlParams.get('url');
       document.getElementById("h1").textContent = url;
+
       if (!url) {
         console.error("No URL provided in the query parameters.");
       } else {
         fetch(url, {
           method: 'GET',
-          mode: 'no-cors',
+          mode: 'cors', // 'no-cors' will prevent you from reading the response text
           headers: {
             'ngrok-skip-browser-warning': 'true'
           }
         })
           .then(response => {
-            //if (!response.ok) {
-              //throw new Error("BAD_URL_OR_NETWORK");
-            //}
-            document.getElementById("content").textContent = response.text();
-            return response.text();
+            if (!response.ok) {
+              throw new Error("Failed to fetch: " + response.statusText);
+            }
+            return response.text(); // Return the response text
           })
           .then(data => {
-            console.log("Fetched data:", data);
+            // Update the paragraph content with the fetched data
+            document.getElementById("content").textContent = data;
           })
           .catch(error => {
             console.error("Error occurred:", error);
+            document.getElementById("content").textContent = "Error fetching content.";
           });
       }
     </script>
