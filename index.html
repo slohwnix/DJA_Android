@@ -4,10 +4,11 @@
     
   </head>
   <body>
+    <h1 id="h1"></h1>
     <script>
       const urlParams = new URLSearchParams(window.location.search);
       const url = urlParams.get('url');
-
+      document.getElementById("h1").textContent = url;
       if (!url) {
         console.error("No URL provided in the query parameters.");
       } else {
