@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DJ appstore</title>
+    <title>DJ Appstore</title>
     <style>
         body, html {
             margin: 0;
@@ -19,41 +19,53 @@
     </style>
 </head>
 <body>
+    <!-- Iframe pour afficher le site -->
     <iframe id="webapp" src="https://faithful-sincerely-arachnid.ngrok-free.app/" title="Web App"></iframe>
 
     <script>
+        // URL de l'API ou du site distant
         const url = "https://faithful-sincerely-arachnid.ngrok-free.app/";
 
         async function fetchAndStoreCookies() {
             try {
+                // Envoie une requête GET avec 'credentials' pour inclure les cookies
                 const response = await fetch(url, {
                     method: "GET",
                     headers: {
-                        "ngrok-skip-browser-warning": "true"
+                        "ngrok-skip-browser-warning": "true" // Bypass éventuels warnings de Ngrok
                     },
-                    credentials: 'include' 
+                    credentials: 'include' // Inclut les cookies si possible
                 });
 
                 if (response.ok) {
-                    console.log("Requête envoyée avec succès. Cookies possiblement définis par le serveur.");
+                    console.log("Requête réussie, vérifiez les cookies.");
                     storeAllCookies();
                 } else {
-                    console.log("Erreur lors de la requête.");
+                    console.error("Erreur lors de la requête : " + response.statusText);
                 }
             } catch (error) {
-                console.error("Erreur de connexion:", error);
+                console.error("Erreur lors de la connexion :", error);
             }
         }
 
         function storeAllCookies() {
-            const allCookies = document.cookie;
-            console.log("Tous les cookies:", allCookies);
+            try {
+                // Accès à document.cookie uniquement pour le domaine courant
+                const allCookies = document.cookie;
 
-            localStorage.setItem('savedCookies', allCookies);
-            console.log("Cookies sauvegardés");
+                console.log("Cookies accessibles : ", allCookies);
+
+                // Sauvegarde des cookies dans le localStorage
+                localStorage.setItem('savedCookies', allCookies);
+                console.log("Cookies sauvegardés dans localStorage.");
+            } catch (error) {
+                console.error("Erreur lors du stockage des cookies :", error);
+            }
         }
 
+        // Appelle la fonction pour récupérer les cookies
         fetchAndStoreCookies();
     </script>
 </body>
 </html>
+
