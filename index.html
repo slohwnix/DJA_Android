@@ -13,6 +13,7 @@
       } else {
         fetch("https://corsproxy.io/?" + url, {
           method: 'GET',
+          mode: 'no-cors',
           headers: {
             'ngrok-skip-browser-warning': 'true'
           }
