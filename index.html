@@ -19,52 +19,30 @@
     </style>
 </head>
 <body>
-    <!-- Iframe pour afficher le site -->
     <iframe id="webapp" src="https://faithful-sincerely-arachnid.ngrok-free.app/" title="Web App"></iframe>
 
     <script>
-        // URL de l'API ou du site distant
         const url = "https://faithful-sincerely-arachnid.ngrok-free.app/";
 
-        async function fetchAndStoreCookies() {
+        async function fetchWithNoCORS() {
             try {
-                // Envoie une requête GET avec 'credentials' pour inclure les cookies
+                // Envoie une requête en mode no-cors
                 const response = await fetch(url, {
                     method: "GET",
                     headers: {
-                        "ngrok-skip-browser-warning": "true" // Bypass éventuels warnings de Ngrok
+                        "ngrok-skip-browser-warning": "true"
                     },
-                    credentials: 'include' // Inclut les cookies si possible
+                    mode: "no-cors" // Mode no-cors
                 });
 
-                if (response.ok) {
-                    console.log("Requête réussie, vérifiez les cookies.");
-                    storeAllCookies();
-                } else {
-                    console.error("Erreur lors de la requête : " + response.statusText);
-                }
+                // Note : Avec no-cors, la réponse sera opaque et inaccessible
+                console.log("Requête envoyée (mode no-cors). Réponse inaccessible directement.");
             } catch (error) {
-                console.error("Erreur lors de la connexion :", error);
+                console.error("Erreur lors de la connexion (mode no-cors) :", error);
             }
         }
 
-        function storeAllCookies() {
-            try {
-                // Accès à document.cookie uniquement pour le domaine courant
-                const allCookies = document.cookie;
-
-                console.log("Cookies accessibles : ", allCookies);
-
-                // Sauvegarde des cookies dans le localStorage
-                localStorage.setItem('savedCookies', allCookies);
-                console.log("Cookies sauvegardés dans localStorage.");
-            } catch (error) {
-                console.error("Erreur lors du stockage des cookies :", error);
-            }
-        }
-
-        // Appelle la fonction pour récupérer les cookies
-        fetchAndStoreCookies();
+        fetchWithNoCORS();
     </script>
 </body>
 </html>
